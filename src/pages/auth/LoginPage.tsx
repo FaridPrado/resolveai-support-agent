@@ -95,7 +95,7 @@ export function LoginPage() {
           }
         }}
       >
-        Continuar en modo mock
+        Entrar con cuenta demo
       </Button>
 
       <p className="mt-6 text-center text-sm text-slate-500">
