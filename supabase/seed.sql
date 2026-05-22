@@ -1,0 +1,6 @@
+-- Seed opcional para Supabase local.
+-- Despues de registrarte y crear una organizacion en la app, ejecuta:
+--   select public.load_demo_data('<organization_id>');
+--
+-- La funcion valida autorizacion: el usuario autenticado debe ser propietario
+-- o admin de la organizacion objetivo. No borra datos existentes.
