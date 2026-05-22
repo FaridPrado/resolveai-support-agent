@@ -11,8 +11,8 @@ Agente de soporte al cliente con inteligencia artificial, aprobación humana, ba
 
 ## Demo
 
-- **Aplicación web:** pendiente de deploy público.
-- **Repositorio:** pendiente de URL pública.
+- **Aplicación web:** https://resolveai-support-agent.vercel.app
+- **Repositorio:** https://github.com/FaridPrado/resolveai-support-agent
 - **Modo demo local:** disponible sin configurar Supabase.
 - **Usuario demo sugerido:** `demo@resolveai.local`
 - **Contraseña demo sugerida:** `demo-password`
