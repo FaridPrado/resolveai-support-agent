@@ -304,6 +304,23 @@ create table if not exists public.analytics_events (
 create unique index if not exists customers_unique_external_id
   on public.customers(organization_id, external_id)
   where external_id is not null;
+
+-- Required by load_demo_data(): ON CONFLICT (organization_id, external_id)
+-- needs a real unique constraint, not only a partial unique index.
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'customers_organization_external_id_unique'
+      and conrelid = 'public.customers'::regclass
+  ) then
+    alter table public.customers
+    add constraint customers_organization_external_id_unique
+    unique (organization_id, external_id);
+  end if;
+end $$;
+
 create unique index if not exists knowledge_sources_unique_title
   on public.knowledge_sources(organization_id, title);
 create unique index if not exists automation_rules_unique_name
@@ -600,7 +617,6 @@ to authenticated;
 
 grant insert on public.agent_feedback to authenticated;
 grant execute on function public.create_organization_with_owner(text, text, text, text) to authenticated;
-grant execute on function public.load_demo_data(uuid) to authenticated;
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
@@ -914,3 +930,6 @@ begin
     (target_organization_id, current_user_id, 'system', 'suspicious prompt injection detected', 'ticket', null, '{"risk_flags":["possible_prompt_injection"]}');
 end;
 $$;
+
+revoke execute on function public.load_demo_data(uuid) from public;
+grant execute on function public.load_demo_data(uuid) to authenticated;
